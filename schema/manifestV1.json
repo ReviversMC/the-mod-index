@@ -11,7 +11,7 @@
         "sourceControl": "git or others, without the .git extension or similar. No mirrors.",
         "others": {
             "linkName": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\"",
-            "url": "Url to reach contact"
+            "url": "The url of the link"
         }
     },
     "files": [
