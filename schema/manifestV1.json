@@ -1,0 +1,29 @@
+{
+    "__schemaComment": "For fields that are NA (e.g. sourceControl for a closed source project, use null. This comment should not be in manifests.",
+    "schemaVersion": "1.0.0",
+    "fancyName": "The name of the project",
+    "author": "The author/group on source control, Modrinth, or CurseForge, in that order",
+    "license": "LicenseName or url if custom",
+    "curseForgeId": "Id, not the slug",
+    "modrinthId": "Id, not the slug",
+    "links": {
+        "issue": "Usually the issues of a sourceControl, unless otherwise stated.",
+        "sourceControl": "git or others, without the .git extension or similar. No mirrors.",
+        "others": {
+            "linkName": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\"",
+            "url": "Url to reach contact"
+        }
+    },
+    "files": [
+        {
+            "fileName": "This is usually just cosmetic, should not be relied on for version checking.",
+            "mcVersions": [
+                "version (e.g. 1.18)"
+            ],
+            "sha1Hash": "The sha1 hash of the jar",
+            "downloadUrls": [
+                "Links should not require any form of user interaction to be downloaded"
+            ]
+        }
+    ]
+}

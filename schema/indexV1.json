@@ -1,0 +1,9 @@
+{
+    "schemaVersion": "1.0.0",
+    "files": [
+        {
+         "identifier": "modLoader:modName:version",
+         "sha1Hash": "Hash of the jar for the specific version."
+        }
+    ]
+}
