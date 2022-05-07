@@ -25,7 +25,8 @@
             "sha1Hash": "The sha1 hash of the jar",
             "downloadUrls": [
                 "Links should not require any form of user interaction to be downloaded"
-            ]
+            ],
+            "curseDownloadAvailable": true
         }
     ]
 }
