@@ -1,6 +1,6 @@
 {
     "__schemaComment": "For fields that are NA (e.g. sourceControl for a closed source project, use null. This comment should not be in manifests.",
-    "schemaVersion": "1.0.0",
+    "schemaVersion": "2.0.0",
     "fancyName": "The name of the project",
     "author": "The author/group on source control, Modrinth, or CurseForge, in that order",
     "license": "LicenseName or url if custom",
@@ -22,7 +22,7 @@
             "mcVersions": [
                 "version (e.g. 1.18)"
             ],
-            "sha1Hash": "The sha1 hash of the jar",
+            "sha512Hash": "The sha512 hash of the jar",
             "downloadUrls": [
                 "Links should not require any form of user interaction to be downloaded"
             ],
