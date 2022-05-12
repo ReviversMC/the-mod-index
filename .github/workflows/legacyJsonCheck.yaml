@@ -1,0 +1,12 @@
+name: Legacy Json Check
+
+on:
+  push:
+    branches: [ v1 ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do the checking of index and manifest files
+        uses: reviversmc/the-mod-index-validation@v1

@@ -2,7 +2,7 @@ name: Json Check
 
 on:
   push:
-    branches: [ main, next/*, v* ]
+    branches: [ v2 ]
 
 jobs:
   build:
