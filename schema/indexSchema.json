@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ReviversMC/the-mod-index/blob/v3/schema/indexSchema.json",
+  "title": "Index Schema",
+  "description": "The file to search when searching for mods.",
+  "type": "object",
+  "properties": {
+    "indexVersion": {
+      "type": "string",
+      "description": "The semver version of the targeted index."
+    },
+    "files": {
+      "type": "array",
+      "description": "The files in the index.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "The identifier for a file"
+          },
+          "sha512Hash": {
+            "type": "string",
+            "description": "Th sha512 hash for a file"
+          }
+        }
+      },
+      "required": [
+        "identifier",
+        "sha512Hash"
+      ]
+    }
+  }
+}

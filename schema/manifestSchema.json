@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ReviversMC/the-mod-index/blob/v3/schema/manifestSchema.json",
+  "title": "Manifest Schema",
+  "description": "The file for each of a mod per its loader",
+  "type": "object",
+  "properties": {
+    "indexVersion": {
+      "type": "string",
+      "description": "The semver version of the targeted index."
+    },
+    "fancyName": {
+      "type": "string",
+      "description": "The fancy name of the mod."
+    },
+    "author": {
+      "type": "string",
+      "description": "The author of the mod."
+    },
+    "license": {
+      "type": [
+        "string",
+        null
+      ],
+      "description": "The license of the mod, or url if not a standard license."
+    },
+    "curseForgeId": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "The curseforge id of the mod."
+    },
+    "modrinthId": {
+      "type": [
+        "string",
+        null
+      ],
+      "description": "The modrinth id of the mod."
+    },
+    "links": {
+      "type": [
+        "array",
+        null
+      ],
+      "description": "The external links a mod has.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": [
+              "string",
+              null
+            ],
+            "description": "The issue tracker link."
+          },
+          "sourceControl": {
+            "type": [
+              "string",
+              null
+            ],
+            "description": "The source control link."
+          },
+          "others": {
+            "type": "object",
+            "description": "Other links.",
+            "properties": {
+              "linkName": {
+                "type": "string",
+                "description": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\""
+              },
+              "url": {
+                "type": "string",
+                "description": "The url of the link."
+              }
+            },
+            "required": [
+              "linkName",
+              "url"
+            ]
+          }
+        },
+        "required": [
+          "issue",
+          "sourceControl",
+          "others"
+        ]
+      }
+    },
+    "files": {
+      "type": "array",
+      "description": "The files the mod has.",
+      "properties": {
+        "fileName": {
+          "type": "string",
+          "description": "The name of the file."
+        },
+        "mcVersions": {
+          "type": "array",
+          "description": "The minecraft versions the file is compatible with. Do not include mod loaders.",
+          "items": {
+            "type": "string",
+            "description": "The minecraft version.  Do not include mod loaders."
+          },
+          "required": [
+            "mcVersions"
+          ]
+        },
+        "sha512Hash": {
+          "type": "string",
+          "description": "The sha512 hash of the file."
+        },
+        "downloadUrls": {
+          "type": "array",
+          "description": "The download urls of the file.",
+          "items": {
+            "type": "string",
+            "description": "The download url of the file."
+          },
+          "required": [
+            "downloadUrls"
+          ]
+        },
+        "curseDownloadAvailable": {
+          "type": "boolean",
+          "description": "Whether the file is available on curseforge."
+        }
+      },
+      "required": [
+        "fileName",
+        "mcVersions",
+        "sha512Hash",
+        "downloadUrls",
+        "curseDownloadAvailable"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "version",
+    "authors",
+    "curseForgeId",
+    "modrinthId",
+    "links",
+    "files"
+  ]
+}
