@@ -2,11 +2,11 @@ name: Json Check
 
 on:
   push:
-    branches: [ v2 ]
+    branches: [ v3 ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Do the checking of index and manifest files
-      uses: reviversmc/the-mod-index-validation@2.0.0
+      - name: Do the checking of index and manifest files
+        uses: reviversmc/the-mod-index-validation@3.0.0
