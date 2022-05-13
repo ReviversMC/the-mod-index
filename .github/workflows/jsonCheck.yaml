@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Do the checking of index and manifest files
-        uses: reviversmc/the-mod-index-validation@3.0.0
+        uses: reviversmc/the-mod-index-validation@3.0.1
