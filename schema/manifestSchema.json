@@ -100,7 +100,7 @@
           "description": "The minecraft versions the file is compatible with. Do not include mod loaders.",
           "items": {
             "type": "string",
-            "description": "The minecraft version.  Do not include mod loaders."
+            "description": "The minecraft version. Does not include mod loaders."
           },
           "required": [
             "mcVersions"
