@@ -41,7 +41,7 @@ Meta data we serve includes:
 - Contact links, if available
 - Much, much more!
 
-We use an identifier for all mods indexed, in the format "modLoader:modId:fileHash", and files are stored in the format "/modLoader/modId", where all identifiers are lowercase.
+We use an identifier for all mods indexed, in the format "modLoader:modName:fileHash", and files are stored in the format "/modLoader/modName", where all identifiers are lowercase.
 Only mods with at least 1 file hash will be indexed, and file hashes will only be stored if there is at least one download link available
 
 TODO: Notice about obtaining CurseForge files
@@ -52,7 +52,7 @@ Take a look around, you can view schemas or just view a random mod's manifest fo
 There is no server interpreting your http calls - what you see is what you get.  
 Request for the raw of the index/manifests, and you shall receive the raw of the index/manifests.
 
-Base URL: https://raw.githubusercontent.com/ReviversMC/the-mod-index/$BRANCH/mods/index.json, where $BRANCH is the name of the branch. For example, branch v3, which corresponds to version 3 of the index.  
+Base URL: https://raw.githubusercontent.com/ReviversMC/the-mod-index/{BRANCH}/mods/index.json, where {BRANCH} is the name of the branch. For example, branch v3, which corresponds to version 3 of the index.  
 You are advised to always use the "default" branch where possible, as that will be the version actively supported.
 
 > Versioning notice: the-mod-index follows semantic versioning. A new branch will only be created on major version changes, and major version changes **WILL** break backwards compatibility.  
@@ -65,7 +65,11 @@ Response:
 - 200 (success): [Index Schema](/schema/indexSchema.json)  
 - 404 (not found): The index file does not exist.
 ---
-GET /mods/modLoader/modId.json  
+GET /mods/{modLoader}/{modName}.json  
+Parameters:  
+- modLoader: The mod loader of a mod. E.g. for an identifier "bricks:fakemod:fakehash", the modLoader would be "bricks"
+- modName: The name of the mod as found in the index. E.g. for an identifier "bricks:fakemod:fakehash", the modLoader would be "fakemod"
+
 Response: 
 - 200 (success):[Manifest Schema](/schema/manifestSchema.json)
 - 404 (not found): The manifest does not exist.
