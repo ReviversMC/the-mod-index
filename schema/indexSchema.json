@@ -23,7 +23,7 @@
         "integer",
         null
       ],
-      "description": "The epoch time when index version will no longer receive mod updates."
+      "description": "The epoch time when index version will no longer receive mod updates. May be larger than a 32 bit integer."
     }
   },
   "required": [
