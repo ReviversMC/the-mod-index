@@ -7,28 +7,28 @@
   "properties": {
     "indexVersion": {
       "type": "string",
-      "description": "The semver version of the targeted index."
+      "description": "The semver version of the targeted index.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
     },
     "files": {
       "type": "array",
       "description": "The files in the index.",
       "items": {
-        "type": "object",
-        "properties": {
-          "identifier": {
-            "type": "string",
-            "description": "The identifier for a file"
-          },
-          "sha512Hash": {
-            "type": "string",
-            "description": "Th sha512 hash for a file"
-          }
-        }
-      },
-      "required": [
-        "identifier",
-        "sha512Hash"
-      ]
+        "type": "string",
+        "pattern": "^[a-z\\d-_]+\\.json$"
+      }
+    },
+    "eolEpochTime": {
+      "type": [
+        "integer",
+        null
+      ],
+      "description": "The epoch time when index version will no longer receive mod updates."
     }
-  }
+  },
+  "required": [
+    "identifier",
+    "sha512Hash",
+    "eolEpochTime"
+  ]
 }
