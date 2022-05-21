@@ -71,7 +71,7 @@ Parameters:
 - modName: The name of the mod as found in the index. E.g. for an identifier "bricks:fakemod:fakehash", the modLoader would be "fakemod"
 
 Response: 
-- 200 (success):[Manifest Schema](/schema/manifestSchema.json)
+- 200 (success): [Manifest Schema](/schema/manifestSchema.json)
 - 404 (not found): The manifest does not exist.
 ---
 
