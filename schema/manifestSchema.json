@@ -7,27 +7,31 @@
   "properties": {
     "indexVersion": {
       "type": "string",
-      "description": "The semver version of the targeted index."
+      "description": "The semver version of the targeted index.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
     },
     "fancyName": {
       "type": "string",
-      "description": "The fancy name of the mod."
+      "description": "The fancy name of the mod.",
+      "pattern": "^[a-z\\d-_]+$"
     },
     "author": {
       "type": "string",
-      "description": "The author of the mod."
+      "description": "The author of the mod.",
+      "pattern": "^[a-zA-Z\\d-_]+$"
     },
     "license": {
       "type": [
         "string",
         null
       ],
-      "description": "The license of the mod, or url if not a standard license."
+      "description": "The license of the mod, or url if not a standard license.",
+      "pattern": "^[a-zA-Z\\d-_\\s]+$"
     },
     "curseForgeId": {
       "type": [
         "integer",
-        "string"
+        null
       ],
       "description": "The curseforge id of the mod."
     },
@@ -36,7 +40,8 @@
         "string",
         null
       ],
-      "description": "The modrinth id of the mod."
+      "description": "The modrinth id of the mod.",
+      "pattern": "^[a-zA-Z\\d]+$"
     },
     "links": {
       "type": [
@@ -52,14 +57,16 @@
               "string",
               null
             ],
-            "description": "The issue tracker link."
+            "description": "The issue tracker link.",
+            "pattern": "^\\w+$"
           },
           "sourceControl": {
             "type": [
               "string",
               null
             ],
-            "description": "The source control link."
+            "description": "The source control link.",
+            "pattern": "^\\w+$"
           },
           "others": {
             "type": "object",
@@ -67,11 +74,13 @@
             "properties": {
               "linkName": {
                 "type": "string",
-                "description": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\""
+                "description": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\"",
+                "pattern": "^\\w+$"
               },
               "url": {
                 "type": "string",
-                "description": "The url of the link."
+                "description": "The url of the link.",
+                "pattern": "^\\w+$"
               }
             },
             "required": [
@@ -93,14 +102,16 @@
       "properties": {
         "fileName": {
           "type": "string",
-          "description": "The name of the file."
+          "description": "The name of the file.",
+          "pattern": "^[a-zA-Z\\d-_\\s]+$"
         },
         "mcVersions": {
           "type": "array",
           "description": "The minecraft versions the file is compatible with. Do not include mod loaders.",
           "items": {
             "type": "string",
-            "description": "The minecraft version. Does not include mod loaders."
+            "description": "The minecraft version. Does not include mod loaders.",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
           },
           "required": [
             "mcVersions"
@@ -108,14 +119,16 @@
         },
         "sha512Hash": {
           "type": "string",
-          "description": "The sha512 hash of the file."
+          "description": "The sha512 hash of the file.",
+            "pattern": "^[a-zA-Z\\d]+$"
         },
         "downloadUrls": {
           "type": "array",
           "description": "The download urls of the file.",
           "items": {
             "type": "string",
-            "description": "The download url of the file."
+            "description": "The download url of the file.",
+            "pattern": "^\\w+$"
           },
           "required": [
             "downloadUrls"
