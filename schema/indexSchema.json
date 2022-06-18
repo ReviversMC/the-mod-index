@@ -10,12 +10,12 @@
       "description": "The semver version of the targeted index.",
       "pattern": "^\\d+\\.\\d+\\.\\d+$"
     },
-    "files": {
+    "identifiers": {
       "type": "array",
-      "description": "The files in the index.",
+      "description": "The identifiers of the manifests available",
       "items": {
         "type": "string",
-        "pattern": "^[a-z\\d-_]+\\.json$"
+        "pattern": "^[a-z\\d-_]+$"
       }
     },
     "eolEpochTime": {

@@ -10,6 +10,11 @@
       "description": "The semver version of the targeted index.",
       "pattern": "^\\d+\\.\\d+\\.\\d+$"
     },
+    "genericIdentifier": {
+      "type": "string",
+      "description": "The fancy name of the mod.",
+      "pattern": "^[a-z\\d-_]+$"
+    },
     "fancyName": {
       "type": "string",
       "description": "The fancy name of the mod.",
