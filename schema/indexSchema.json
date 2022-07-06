@@ -8,14 +8,14 @@
     "indexVersion": {
       "type": "string",
       "description": "The semver version of the targeted index.",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "identifiers": {
       "type": "array",
       "description": "The identifiers of the manifests available",
       "items": {
         "type": "string",
-        "pattern": "^[a-z\\d-_]+$"
+        "pattern": "[a-z0-9\\-_]+:[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
       }
     },
     "eolEpochTime": {

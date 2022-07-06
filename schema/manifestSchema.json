@@ -8,22 +8,22 @@
     "indexVersion": {
       "type": "string",
       "description": "The semver version of the targeted index.",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "genericIdentifier": {
       "type": "string",
       "description": "The fancy name of the mod.",
-      "pattern": "^[a-z\\d-_]+$"
+      "pattern": "[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
     },
     "fancyName": {
       "type": "string",
       "description": "The fancy name of the mod.",
-      "pattern": "^[a-z\\d-_]+$"
+      "pattern": "^[a-z0-9\\-_]+$"
     },
     "author": {
       "type": "string",
       "description": "The author of the mod.",
-      "pattern": "^[a-zA-Z\\d-_]+$"
+      "pattern": "^[a-zA-Z0-9\\-_]+$"
     },
     "license": {
       "type": [
@@ -31,7 +31,7 @@
         null
       ],
       "description": "The license of the mod, or url if not a standard license.",
-      "pattern": "^[a-zA-Z\\d-_\\s]+$"
+      "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
     },
     "curseForgeId": {
       "type": [
@@ -46,46 +46,43 @@
         null
       ],
       "description": "The modrinth id of the mod.",
-      "pattern": "^[a-zA-Z\\d]+$"
+      "pattern": "^[a-zA-Z0-9]+$"
     },
     "links": {
-      "type": [
-        "array",
-        null
-      ],
+      "type": "object",
       "description": "The external links a mod has.",
-      "items": {
-        "type": "object",
-        "properties": {
-          "issue": {
-            "type": [
-              "string",
-              null
-            ],
-            "description": "The issue tracker link.",
-            "pattern": "^\\w+$"
-          },
-          "sourceControl": {
-            "type": [
-              "string",
-              null
-            ],
-            "description": "The source control link.",
-            "pattern": "^\\w+$"
-          },
-          "others": {
+      "properties": {
+        "issue": {
+          "type": [
+            "string",
+            null
+          ],
+          "description": "The issue tracker link.",
+          "pattern": "^[a-zA-Z0-9\\-_]+$"
+        },
+        "sourceControl": {
+          "type": [
+            "string",
+            null
+          ],
+          "description": "The source control link.",
+          "pattern": "^[a-zA-Z0-9\\-_]+$"
+        },
+        "others": {
+          "type": "array",
+          "description": "Other links.",
+          "items": {
             "type": "object",
-            "description": "Other links.",
             "properties": {
               "linkName": {
                 "type": "string",
                 "description": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\"",
-                "pattern": "^\\w+$"
+                "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
               },
               "url": {
                 "type": "string",
                 "description": "The url of the link.",
-                "pattern": "^\\w+$"
+                "pattern": "^[a-zA-Z0-9\\-_]+$"
               }
             },
             "required": [
@@ -93,13 +90,13 @@
               "url"
             ]
           }
-        },
-        "required": [
-          "issue",
-          "sourceControl",
-          "others"
-        ]
-      }
+        }
+      },
+      "required": [
+        "issue",
+        "sourceControl",
+        "others"
+      ]
     },
     "files": {
       "type": "array",
@@ -108,7 +105,7 @@
         "fileName": {
           "type": "string",
           "description": "The name of the file.",
-          "pattern": "^[a-zA-Z\\d-_\\s]+$"
+          "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
         },
         "mcVersions": {
           "type": "array",
@@ -116,7 +113,7 @@
           "items": {
             "type": "string",
             "description": "The minecraft version. Does not include mod loaders.",
-            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
           },
           "required": [
             "mcVersions"
@@ -125,7 +122,7 @@
         "sha512Hash": {
           "type": "string",
           "description": "The sha512 hash of the file.",
-            "pattern": "^[a-zA-Z\\d]+$"
+          "pattern": "^[a-z0-9]{128}$"
         },
         "downloadUrls": {
           "type": "array",
@@ -133,7 +130,7 @@
           "items": {
             "type": "string",
             "description": "The download url of the file.",
-            "pattern": "^\\w+$"
+            "pattern": "^[a-zA-Z0-9\\-_:\/?&]+$"
           },
           "required": [
             "downloadUrls"
@@ -142,6 +139,34 @@
         "curseDownloadAvailable": {
           "type": "boolean",
           "description": "Whether the file is available on curseforge."
+        },
+        "relationsToOtherMods": {
+          "type": "object",
+          "description": "The relations (i.e. dependencies/conflicts) of the file.",
+          "properties": {
+            "required": {
+              "type": "array",
+              "description": "The other mods that this mod requires to run (i.e. dependencies).",
+              "items": {
+                "type": "string",
+                "description": "The generic identifier of the required mod.",
+                "pattern": "[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+              }
+            },
+            "incompatible": {
+              "type": "array",
+              "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+              "items": {
+                "type": "string",
+                "description": "The generic identifier of the incompatible mod.",
+                "pattern": "[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+              }
+            }
+          },
+          "required": [
+            "required",
+            "incompatible"
+          ]
         }
       },
       "required": [
@@ -149,7 +174,8 @@
         "mcVersions",
         "sha512Hash",
         "downloadUrls",
-        "curseDownloadAvailable"
+        "curseDownloadAvailable",
+        "relationsToOtherMods"
       ]
     }
   },
