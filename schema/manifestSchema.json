@@ -13,7 +13,7 @@
     "genericIdentifier": {
       "type": "string",
       "description": "The fancy name of the mod.",
-      "pattern": "[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+      "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
     },
     "fancyName": {
       "type": "string",
@@ -150,7 +150,7 @@
               "items": {
                 "type": "string",
                 "description": "The generic identifier of the required mod.",
-                "pattern": "[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
               }
             },
             "incompatible": {
@@ -159,7 +159,7 @@
               "items": {
                 "type": "string",
                 "description": "The generic identifier of the incompatible mod.",
-                "pattern": "[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
               }
             }
           },
