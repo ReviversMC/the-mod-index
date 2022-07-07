@@ -23,7 +23,7 @@
     "author": {
       "type": "string",
       "description": "The author of the mod.",
-      "pattern": "^[a-zA-Z0-9\\-_]+$"
+      "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
     },
     "license": {
       "type": [
