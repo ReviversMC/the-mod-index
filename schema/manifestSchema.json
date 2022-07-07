@@ -58,7 +58,7 @@
             null
           ],
           "description": "The issue tracker link.",
-          "pattern": "^[a-zA-Z0-9\\-_]+$"
+          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
         },
         "sourceControl": {
           "type": [
@@ -66,7 +66,7 @@
             null
           ],
           "description": "The source control link.",
-          "pattern": "^[a-zA-Z0-9\\-_]+$"
+          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
         },
         "others": {
           "type": "array",
@@ -82,7 +82,7 @@
               "url": {
                 "type": "string",
                 "description": "The url of the link.",
-                "pattern": "^[a-zA-Z0-9\\-_]+$"
+                "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
               }
             },
             "required": [
