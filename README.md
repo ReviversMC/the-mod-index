@@ -21,7 +21,7 @@ files.
 | Relative creation date       | New                                                                                                                              | Established                                             | Established                                             |
 | List available mods          | Supported. One call to get them all                                                                                              | Supported, with filters. Multiple calls to get them all | Supported, with filters. Multiple calls to get them all |
 | Search for mod by identifier | Supported, the-mod-index identifier                                                                                              | Supported, Modrinth project id                          | Supported, CurseForge project id                        |
-| Search by mod hash           | Supported, sha512 (hex)                                                                                                          | Supported, sha1 (hex) or sha512 (hex)                   | Unsupported. Use fingerprint system instead             |
+| Search by mod hash           | Supported, short sha512 (hex, 15 chars)                                                                                          | Supported, sha1 (hex) or sha512 (hex)                   | Unsupported. Use fingerprint system instead             |
 | Relative release cycle       | Fast                                                                                                                             | Moderate                                                | Moderate                                                |
 
 ## How it works
@@ -41,18 +41,25 @@ Meta data we serve includes:
 - Author
 - Description
 - Download link
-- SHA 512 File hash (only when a download link is found for the hash)
+- Short SHA 512 File hash (15 chars, only when a download link is found for the hash)
 - Modrinth and/or CurseForge ids
 - Source control link, if available
 - Contact links, if available
 - Much, much more!
 
-We use an identifier for all mods indexed, in the format "modLoader:modName:fileHash", and files are stored in the
+We use an identifier for all mods indexed, in the format "modLoader:modName:shortFileHash", and files are stored in the
 format "/modLoader/modName", where all identifiers are lowercase.
 Only mods with at least 1 file hash will be indexed, and file hashes will only be stored if there is at least one
 download link available
 
-TODO: Notice about obtaining CurseForge files
+> Notice about obtaining CurseForge files
+>
+> CurseForge TOS prohibits us from storing the download links to any files hosted on CurseForge. To work around this, we
+> instead store a status of whether the CF file is available or not. Consumers can then use their own CF api key to
+> download the file.
+> 
+> It makes little sense for us to index a mod we cannot download. Thus, mods only available on CF and that have third
+> party downloads turned will not be stored in the index.
 
 ## Requesting data
 
@@ -84,9 +91,11 @@ Response:
 GET /mods/{modLoader}/{modName}.json  
 Parameters:
 
-- modLoader: The mod loader of a mod. E.g. for an identifier "bricks:fakemod:fakehash", the modLoader would be "bricks"
-- modName: The name of the mod as found in the index. E.g. for an identifier "bricks:fakemod:fakehash", the modLoader
-  would be "fakemod"
+- modLoader: The mod loader of a mod. E.g. for an identifier "bricks:fake_mod:fake_short_hash", the modLoader would be "
+  bricks"
+- modName: The name of the mod as found in the index. E.g. for an identifier "bricks:fake_mod:fake_short_hash", the
+  modLoader
+  would be "fake_mod"
 
 Response:
 
