@@ -2,9 +2,9 @@ name: Json Check
 
 on:
   push:
-    branches: [ v4 ]
+    branches: [ v5, maintainer-test ]
   pull_request:
-    branches: [ v4 ]
+    branches: [ v5 ]
 
 jobs:
   build:
