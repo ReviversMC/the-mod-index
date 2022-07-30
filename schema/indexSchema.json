@@ -15,7 +15,7 @@
       "description": "The identifiers of the manifests available",
       "items": {
         "type": "string",
-        "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+        "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+:[a-z0-9]{15}$"
       }
     },
     "eolEpochTime": {

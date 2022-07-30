@@ -119,10 +119,10 @@
             "mcVersions"
           ]
         },
-        "sha512Hash": {
+        "shortSha512Hash": {
           "type": "string",
-          "description": "The sha512 hash of the file.",
-          "pattern": "^[a-z0-9]{128}$"
+          "description": "The short sha512 hash of the file, consisting of only 15 characters",
+          "pattern": "^[a-z0-9]{15}$"
         },
         "downloadUrls": {
           "type": "array",
@@ -172,7 +172,7 @@
       "required": [
         "fileName",
         "mcVersions",
-        "sha512Hash",
+        "shortSha512Hash",
         "downloadUrls",
         "curseDownloadAvailable",
         "relationsToOtherMods"
