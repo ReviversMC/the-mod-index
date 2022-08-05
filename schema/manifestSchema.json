@@ -146,8 +146,7 @@
         "mcVersions",
         "shortSha512Hash",
         "downloadUrls",
-        "curseDownloadAvailable",
-        "relationsToOtherMods"
+        "curseDownloadAvailable"
       ]
     },
     "overrides": {
