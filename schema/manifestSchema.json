@@ -139,34 +139,6 @@
         "curseDownloadAvailable": {
           "type": "boolean",
           "description": "Whether the file is available on curseforge."
-        },
-        "relationsToOtherMods": {
-          "type": "object",
-          "description": "The relations (i.e. dependencies/conflicts) of the file.",
-          "properties": {
-            "required": {
-              "type": "array",
-              "description": "The other mods that this mod requires to run (i.e. dependencies).",
-              "items": {
-                "type": "string",
-                "description": "The generic identifier of the required mod.",
-                "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
-              }
-            },
-            "incompatible": {
-              "type": "array",
-              "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
-              "items": {
-                "type": "string",
-                "description": "The generic identifier of the incompatible mod.",
-                "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
-              }
-            }
-          },
-          "required": [
-            "required",
-            "incompatible"
-          ]
         }
       },
       "required": [
@@ -177,6 +149,80 @@
         "curseDownloadAvailable",
         "relationsToOtherMods"
       ]
+    },
+    "overrides": {
+      "type": "object",
+      "description": "The manual overrides the mod has. Mostly for the maintainer's internal use",
+      "properties": {
+        "genericIdentifier": {
+          "type": "string",
+          "description": "The fancy name of the mod.",
+          "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+        },
+        "fancyName": {
+          "type": "string",
+          "description": "The fancy name of the mod.",
+          "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
+        },
+        "author": {
+          "type": "string",
+          "description": "The author of the mod.",
+          "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
+        },
+        "license": {
+          "type": [
+            "string",
+            null
+          ],
+          "description": "The license of the mod, or url if not a standard license.",
+          "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
+        },
+        "links": {
+          "type": "object",
+          "description": "The external links a mod has.",
+          "properties": {
+            "issue": {
+              "type": [
+                "string",
+                null
+              ],
+              "description": "The issue tracker link.",
+              "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
+            },
+            "sourceControl": {
+              "type": [
+                "string",
+                null
+              ],
+              "description": "The source control link.",
+              "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
+            },
+            "others": {
+              "type": "array",
+              "description": "Other links.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "linkName": {
+                    "type": "string",
+                    "description": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\"",
+                    "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "The url of the link.",
+                    "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
+                  }
+                },
+                "required": [
+                  "linkName",
+                  "url"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   },
   "required": [
