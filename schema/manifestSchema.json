@@ -12,7 +12,7 @@
     },
     "genericIdentifier": {
       "type": "string",
-      "description": "The fancy name of the mod.",
+      "description": "The generic identifier of the mod, in the format of <mod-loader>:<mod-name>",
       "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
     },
     "fancyName": {
@@ -155,7 +155,7 @@
       "properties": {
         "genericIdentifier": {
           "type": "string",
-          "description": "The fancy name of the mod.",
+          "description": "The generic identifier of the mod, in the format of <mod-loader>:<mod-name>",
           "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
         },
         "fancyName": {
