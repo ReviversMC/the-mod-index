@@ -139,6 +139,34 @@
         "curseDownloadAvailable": {
           "type": "boolean",
           "description": "Whether the file is available on curseforge."
+        },
+        "relationsToOtherMods": {
+          "type": "object",
+          "description": "The relations (i.e. dependencies/conflicts) of the file.",
+          "properties": {
+            "required": {
+              "type": "array",
+              "description": "The other mods that this mod requires to run (i.e. dependencies).",
+              "items": {
+                "type": "string",
+                "description": "The generic identifier of the required mod.",
+                "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+              }
+            },
+            "incompatible": {
+              "type": "array",
+              "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+              "items": {
+                "type": "string",
+                "description": "The generic identifier of the incompatible mod.",
+                "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+              }
+            }
+          },
+          "required": [
+            "required",
+            "incompatible"
+          ]
         }
       },
       "required": [
@@ -146,7 +174,8 @@
         "mcVersions",
         "shortSha512Hash",
         "downloadUrls",
-        "curseDownloadAvailable"
+        "curseDownloadAvailable",
+        "relationsToOtherMods"
       ]
     },
     "overrides": {
