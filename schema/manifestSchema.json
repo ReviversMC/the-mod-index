@@ -164,7 +164,15 @@
               "incompatible"
             ]
           }
-        }
+        },
+        "required": [
+          "fileName",
+          "mcVersions",
+          "shortSha512Hash",
+          "downloadUrls",
+          "curseDownloadAvailable",
+          "relationsToOtherMods"
+        ]
       }
     },
     "overrides": {
