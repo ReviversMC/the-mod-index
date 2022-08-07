@@ -262,28 +262,16 @@
                   ]
                 },
                 "remove": {
-                  "type": "object",
-                  "description": "The links to add.",
-                  "properties": {
-                    "linkName": {
-                      "type": "string",
-                      "description": "The type of link, like \"discord\", \"irc\", or \"GitHub wiki\"",
-                      "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
-                    },
-                    "url": {
-                      "type": "string",
-                      "description": "The url of the link.",
-                      "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
-                    }
-                  },
-                  "required": [
-                    "linkName",
-                    "url"
-                  ]
+                  "type": "array",
+                  "description": "The type of link to remove, like \"discord\", \"irc\", or \"GitHub wiki\"",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
+                  }
                 },
                 "replace": {
                   "type": "object",
-                  "description": "The links to add.",
+                  "description": "The links to replace.",
                   "properties": {
                     "linkName": {
                       "type": "string",
