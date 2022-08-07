@@ -263,9 +263,10 @@
                 },
                 "remove": {
                   "type": "array",
-                  "description": "The type of link to remove, like \"discord\", \"irc\", or \"GitHub wiki\"",
+                  "description": "The links to remove.",
                   "items": {
                     "type": "string",
+                    "description": "The type of link to remove, like \"discord\", \"irc\", or \"GitHub wiki\"",
                     "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
                   }
                 },
@@ -294,173 +295,370 @@
           }
         },
         "files": {
-          "type": "array",
-          "description": "The files the mod has.",
-          "items": {
-            "type": "object",
-            "properties": {
-              "fileName": {
-                "type": "string",
-                "description": "The name of the file.",
-                "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
-              },
-              "mcVersions": {
+          "type": "object",
+          "description": "The overrides for the files of the mod.",
+          "properties": {
+            "add": {
+              "type": "array",
+              "description": "The files to add for the mod.",
+              "items": {
                 "type": "object",
-                "description": "The minecraft versions the file is compatible with.",
                 "properties": {
-                  "add": {
-                    "type": "array",
-                    "description": "The mc versions to add.",
-                    "items": {
-                      "type": "string",
-                      "description": "The minecraft version. Does not include mod loaders.",
-                      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
-                    }
+                  "fileName": {
+                    "type": "string",
+                    "description": "The name of the file.",
+                    "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
                   },
-                  "remove": {
-                    "type": "array",
-                    "description": "The mc versions to remove.",
-                    "items": {
-                      "type": "string",
-                      "description": "The minecraft version. Does not include mod loaders.",
-                      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
-                    }
-                  },
-                  "replace": {
-                    "type": "array",
-                    "description": "The mc versions to replace.",
-                    "items": {
-                      "type": "string",
-                      "description": "The minecraft version. Does not include mod loaders.",
-                      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
-                    }
-                  }
-                }
-              },
-              "shortSha512Hash": {
-                "type": "string",
-                "description": "The short sha512 hash of the file, consisting of only 15 characters",
-                "pattern": "^[a-z0-9]{15}$"
-              },
-              "downloadUrls": {
-                "type": "object",
-                "description": "The download urls of the file.",
-                "properties": {
-                  "add": {
-                    "type": "array",
-                    "description": "The download urls to add.",
-                    "items": {
-                      "type": "string",
-                      "description": "The download url of the file.",
-                      "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
-                    }
-                  },
-                  "remove": {
-                    "type": "array",
-                    "description": "The download urls to remove.",
-                    "items": {
-                      "type": "string",
-                      "description": "The download url of the file.",
-                      "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
-                    }
-                  },
-                  "replace": {
-                    "type": "array",
-                    "description": "The download urls to replace.",
-                    "items": {
-                      "type": "string",
-                      "description": "The download url of the file.",
-                      "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
-                    }
-                  }
-                }
-              },
-              "curseDownloadAvailable": {
-                "type": "boolean",
-                "description": "Whether the file is available on curseforge."
-              },
-              "relationsToOtherMods": {
-                "type": "object",
-                "description": "The relations (i.e. dependencies/conflicts) of the file.",
-                "properties": {
-                  "add": {
+                  "mcVersions": {
                     "type": "object",
-                    "description": "The relations to add.",
+                    "description": "The minecraft versions the file is compatible with.",
                     "properties": {
-                      "required": {
+                      "add": {
                         "type": "array",
-                        "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                        "description": "The mc versions to add.",
                         "items": {
                           "type": "string",
-                          "description": "The generic identifier of the required mod.",
-                          "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                          "description": "The minecraft version. Does not include mod loaders.",
+                          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
                         }
                       },
-                      "incompatible": {
+                      "remove": {
                         "type": "array",
-                        "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                        "description": "The mc versions to remove.",
                         "items": {
                           "type": "string",
-                          "description": "The generic identifier of the incompatible mod.",
-                          "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                          "description": "The minecraft version. Does not include mod loaders.",
+                          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
+                        }
+                      },
+                      "replace": {
+                        "type": "array",
+                        "description": "The mc versions to replace.",
+                        "items": {
+                          "type": "string",
+                          "description": "The minecraft version. Does not include mod loaders.",
+                          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
                         }
                       }
                     }
                   },
-                  "remove": {
+                  "shortSha512Hash": {
+                    "type": "string",
+                    "description": "The short sha512 hash of the file, consisting of only 15 characters",
+                    "pattern": "^[a-z0-9]{15}$"
+                  },
+                  "downloadUrls": {
                     "type": "object",
-                    "description": "The relations to remove.",
+                    "description": "The download urls of the file.",
                     "properties": {
-                      "required": {
+                      "add": {
                         "type": "array",
-                        "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                        "description": "The download urls to add.",
                         "items": {
                           "type": "string",
-                          "description": "The generic identifier of the required mod.",
-                          "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                          "description": "The download url of the file.",
+                          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
                         }
                       },
-                      "incompatible": {
+                      "remove": {
                         "type": "array",
-                        "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                        "description": "The download urls to remove.",
                         "items": {
                           "type": "string",
-                          "description": "The generic identifier of the incompatible mod.",
-                          "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                          "description": "The download url of the file.",
+                          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
+                        }
+                      },
+                      "replace": {
+                        "type": "array",
+                        "description": "The download urls to replace.",
+                        "items": {
+                          "type": "string",
+                          "description": "The download url of the file.",
+                          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
                         }
                       }
                     }
                   },
-                  "replace": {
+                  "curseDownloadAvailable": {
+                    "type": "boolean",
+                    "description": "Whether the file is available on curseforge."
+                  },
+                  "relationsToOtherMods": {
                     "type": "object",
-                    "description": "The relations to replace.",
+                    "description": "The relations (i.e. dependencies/conflicts) of the file.",
                     "properties": {
-                      "required": {
-                        "type": "array",
-                        "description": "The other mods that this mod requires to run (i.e. dependencies).",
-                        "items": {
-                          "type": "string",
-                          "description": "The generic identifier of the required mod.",
-                          "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                      "add": {
+                        "type": "object",
+                        "description": "The relations to add.",
+                        "properties": {
+                          "required": {
+                            "type": "array",
+                            "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the required mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          },
+                          "incompatible": {
+                            "type": "array",
+                            "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the incompatible mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          }
                         }
                       },
-                      "incompatible": {
-                        "type": "array",
-                        "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
-                        "items": {
-                          "type": "string",
-                          "description": "The generic identifier of the incompatible mod.",
-                          "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                      "remove": {
+                        "type": "object",
+                        "description": "The relations to remove.",
+                        "properties": {
+                          "required": {
+                            "type": "array",
+                            "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the required mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          },
+                          "incompatible": {
+                            "type": "array",
+                            "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the incompatible mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          }
+                        }
+                      },
+                      "replace": {
+                        "type": "object",
+                        "description": "The relations to replace.",
+                        "properties": {
+                          "required": {
+                            "type": "array",
+                            "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the required mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          },
+                          "incompatible": {
+                            "type": "array",
+                            "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the incompatible mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          }
                         }
                       }
                     }
                   }
+                },
+                "required": [
+                  "fileName",
+                  "mcVersions",
+                  "shortSha512Hash",
+                  "downloadUrls",
+                  "curseDownloadAvailable",
+                  "relationsToOtherMods"
+                ]
+              }
+            },
+            "remove": {
+              "type": "array",
+              "description": "The files to remove.",
+              "items": {
+                "shortSha512Hash": {
+                  "type": "string",
+                  "description": "The short sha512 hash of the file, consisting of only 15 characters",
+                  "pattern": "^[a-z0-9]{15}$"
                 }
               }
             },
-            "required": [
-              "shortSha512Hash"
-            ]
+            "replace": {
+              "type": "array",
+              "description": "The files to use instead of the original files generated",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "type": "string",
+                    "description": "The name of the file.",
+                    "pattern": "^[a-zA-Z0-9\\-_\\s]+$"
+                  },
+                  "mcVersions": {
+                    "type": "object",
+                    "description": "The minecraft versions the file is compatible with.",
+                    "properties": {
+                      "add": {
+                        "type": "array",
+                        "description": "The mc versions to add.",
+                        "items": {
+                          "type": "string",
+                          "description": "The minecraft version. Does not include mod loaders.",
+                          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
+                        }
+                      },
+                      "remove": {
+                        "type": "array",
+                        "description": "The mc versions to remove.",
+                        "items": {
+                          "type": "string",
+                          "description": "The minecraft version. Does not include mod loaders.",
+                          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
+                        }
+                      },
+                      "replace": {
+                        "type": "array",
+                        "description": "The mc versions to replace.",
+                        "items": {
+                          "type": "string",
+                          "description": "The minecraft version. Does not include mod loaders.",
+                          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+[a-zA-Z0-9\\-+._\\s]*$"
+                        }
+                      }
+                    }
+                  },
+                  "shortSha512Hash": {
+                    "type": "string",
+                    "description": "The short sha512 hash of the file, consisting of only 15 characters",
+                    "pattern": "^[a-z0-9]{15}$"
+                  },
+                  "downloadUrls": {
+                    "type": "object",
+                    "description": "The download urls of the file.",
+                    "properties": {
+                      "add": {
+                        "type": "array",
+                        "description": "The download urls to add.",
+                        "items": {
+                          "type": "string",
+                          "description": "The download url of the file.",
+                          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
+                        }
+                      },
+                      "remove": {
+                        "type": "array",
+                        "description": "The download urls to remove.",
+                        "items": {
+                          "type": "string",
+                          "description": "The download url of the file.",
+                          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
+                        }
+                      },
+                      "replace": {
+                        "type": "array",
+                        "description": "The download urls to replace.",
+                        "items": {
+                          "type": "string",
+                          "description": "The download url of the file.",
+                          "pattern": "^[a-zA-Z0-9\\-_:/?&]+$"
+                        }
+                      }
+                    }
+                  },
+                  "curseDownloadAvailable": {
+                    "type": "boolean",
+                    "description": "Whether the file is available on curseforge."
+                  },
+                  "relationsToOtherMods": {
+                    "type": "object",
+                    "description": "The relations (i.e. dependencies/conflicts) of the file.",
+                    "properties": {
+                      "add": {
+                        "type": "object",
+                        "description": "The relations to add.",
+                        "properties": {
+                          "required": {
+                            "type": "array",
+                            "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the required mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          },
+                          "incompatible": {
+                            "type": "array",
+                            "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the incompatible mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          }
+                        }
+                      },
+                      "remove": {
+                        "type": "object",
+                        "description": "The relations to remove.",
+                        "properties": {
+                          "required": {
+                            "type": "array",
+                            "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the required mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          },
+                          "incompatible": {
+                            "type": "array",
+                            "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the incompatible mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          }
+                        }
+                      },
+                      "replace": {
+                        "type": "object",
+                        "description": "The relations to replace.",
+                        "properties": {
+                          "required": {
+                            "type": "array",
+                            "description": "The other mods that this mod requires to run (i.e. dependencies).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the required mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          },
+                          "incompatible": {
+                            "type": "array",
+                            "description": "The other mods that this mod is incompatible with (i.e. conflicts).",
+                            "items": {
+                              "type": "string",
+                              "description": "The generic identifier of the incompatible mod.",
+                              "pattern": "^[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "fileName",
+                  "mcVersions",
+                  "shortSha512Hash",
+                  "downloadUrls",
+                  "curseDownloadAvailable",
+                  "relationsToOtherMods"
+                ]
+              }
+            }
           }
         }
       }
@@ -474,7 +672,6 @@
     "curseForgeId",
     "modrinthId",
     "links",
-    "files",
-    "overrides"
+    "files"
   ]
 }
