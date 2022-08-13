@@ -1,0 +1,471 @@
+openapi: "3.1.0"
+info:
+  title: "the-mod-index"
+  version: "6.0.0"
+  description: |
+    The Mod Index plans to be a source where anyone can refer to for Minecraft mods,
+    bridging the gap between multiple major mod hosting sites. Get mod metadata, download links, and more.
+    
+    The index does **NOT** host or redistribute mod files (e.g. jars), but instead provides links/information to the mod files.
+  license:
+    name: "GNU Affero General Public License v3.0"
+    identifier: "AGPL-3.0"
+
+servers:
+  - url: "https://raw.githubusercontent.com/ReviversMC/the-mod-index/v6/mods"
+    description: "The Mod Index v6"
+
+components:
+  schemas:
+    indexVersion: &indexVersion
+      type: "string"
+      description: "The semver version of the targeted index."
+      pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+      example: "6.0.0"
+
+    identifier: &identifier
+      type: "string"
+      description: "The internal identifier of the manifest available"
+      pattern: "^[a-z0-9\\-_]+:[a-z0-9\\-_]+:[a-z0-9]{15}$"
+      example: "fabric:modget:9da29a647bab8cf"
+
+    indexForModLoader: &indexForModLoader
+      type: "object"
+      description: "The index for a specific mod loader."
+      properties:
+        indexVersion: *indexVersion
+        identifiers:
+          type: "array"
+          description: "The identifiers of the manifests available"
+          pattern: "^(?!\bindex\b|\bindices\b)[a-z0-9\\-_]+:[a-z0-9\\-_]+:[a-z0-9]{15}$"
+          items: *identifier
+        eolEpochTime:
+          oneOf:
+            - type: "integer"
+              description: "The epoch time when index version will no longer receive mod updates. May be larger than a 32 bit integer."
+            - type: "null"
+              description: "If the index version is still in use"
+          description: "The epoch time when index version will no longer receive mod updates. May be larger than a 32 bit integer."
+          example: "null"
+      required:
+        - "indexVersion"
+        - "identifiers"
+        - "eolEpochTime"
+
+    modLoader: &modLoaderSchema
+      type: "string"
+      description: "The mod loader for the manifest available"
+      pattern: "^(?!\bindex\b|\bindices\b)[a-z0-9\\-_]+$"
+      example: "fabric"
+
+    loaderModName: &loaderModNameSchema
+      type: "string"
+      description: "The given mod name for a mod in the index. Usually used in combination with the a `modLoader` to form a `genericIdentifier`"
+      pattern: "^[a-z0-9\\-_]+$"
+      example: "modget"
+
+    shortSha512Hash: &shortSha512Hash
+      type: "string"
+      description: "A truncated sha512 hash, consisting of the first 15 characters of the lowercase hexadecimal hash"
+      pattern: "^[a-z0-9]{15}$"
+      example: "9da29a647bab8cf"
+
+    genericIdentifier: &genericIdentifier
+      type: "string"
+      description: "The generic identifier for a mod in the index, consisting of a `modLoader` and a `loaderModName` in the format of `modLoader:loaderModName`"
+      pattern: "^(?!\bindex\b|\bindices\b)[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+      example: "fabric:modget"
+
+    fancyName: &fancyName
+      type: "string"
+      description: "The fancy name of the mod"
+      pattern: "^[a-zA-Z0-9\\-_\\s]+$"
+      example: "modget"
+
+    authors: &authors
+      type: "array"
+      description: "The author(s) of the mod"
+      pattern: "^[a-zA-Z0-9\\-_\\s]+$"
+      items:
+        type: "string"
+        description: "The author(s) of the mod"
+        example: "ReviversMC"
+      minItems: 1
+
+      license: &license
+        oneOf:
+          - type: "object"
+            description: "The license of the mod"
+            properties:
+              spdxId:
+                type: "string"
+                description: "The spdx license code of the mod"
+                pattern: "^[a-zA-Z0-9\\-_\\s]+$"
+                example: "AGPL-3.0"
+            required:
+              - "spdxId"
+          - type: "object"
+            description: "The license of the mod"
+            properties:
+              url:
+                type: "string"
+                description: "The url of the license"
+                pattern: "^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$"
+                example: "https://spdx.org/licenses/AGPL-3.0.html"
+            required:
+              - "url"
+          - type: "null"
+            description: "If the license is not available"
+            example: "null"
+
+
+    curseForgeId: &curseForgeId
+      oneOf:
+        - type: "integer"
+          description: "The curseforge id of the mod"
+          example: "533960"
+        - type: "null"
+          description: "If the curseforge id is not available"
+          example: "null"
+
+
+    modrinthId: &modrinthId
+      oneOf:
+        - type: "string"
+          description: "The modrinth id of the mod"
+          pattern: "^[a-zA-Z0-9]+$"
+          example: "2NpFE0R3"
+        - type: "null"
+          description: "If the modrinth id is not available"
+          example: "null"
+
+    issueLink: &issueLink
+      oneOf:
+        - type: "string"
+          description: "The issue link for the mod"
+          pattern: "^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$"
+          example: "https://github.com/ReviversMC/modget/issues/"
+        - type: "null"
+          description: "If the issue link is not available"
+          example: "null"
+
+    sourceControlLink: &sourceControlLink
+      oneOf:
+        - type: "string"
+          description: "The source control link for the mod"
+          pattern: "^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$"
+          example: "https://github.com/ReviversMC/modget/"
+        - type: "null"
+          description: "If the source control link is not available"
+          example: "null"
+
+    otherLinks: &otherLinks
+      type: "array"
+      description: "Other links for the mod"
+      items:
+        type: "object"
+        description: "Other links for the mod"
+        properties:
+          linkName:
+            type: "string"
+            description: "The name of the link"
+            pattern: "^[a-zA-Z0-9\\-_\\s]+$"
+            example: "Discord"
+          url:
+            type: "string"
+            description: "The url of the link"
+            pattern: "^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$"
+            example: "https://discord.gg/6bTGYFppfz"
+        required:
+          - "linkName"
+          - "url"
+      minItems: 0
+
+    links: &links
+      type: "object"
+      description: "The links for the mod"
+      properties:
+        issue: *issueLink
+        sourceControl: *sourceControlLink
+        others: *otherLinks
+      required:
+        - "issue"
+        - "sourceControl"
+        - "others"
+
+    mcVersions: &mcVersions
+      type: "array"
+      description: "The minecraft versions the mod is compatible with"
+      items:
+        type: "string"
+        description: "The minecraft version the mod is compatible with"
+        pattern: "^[a-zA-Z0-9\\-_\\s]+$" # Don't limit to just a pattern of x.y.z, cause there are things like snapshots, pre releases, etc
+        example: "1.12.2, 22w24a"
+      minItems: 0
+
+    files: &files
+      type: "array"
+      description: "The files of the mod"
+      items:
+        type: "object"
+        description: "The file of a mod, specific to the mod loader"
+        properties:
+          fileName:
+            type: "string"
+            description: "The name of the file"
+            pattern: "^[a-zA-Z0-9\\-_\\s]+$"
+            example: "Modget 0.0.1 for MC 1.16"
+          mcVersions: *mcVersions
+          shortSha512Hash: *shortSha512Hash
+          downloadUrls:
+            type: "array"
+            description: "The download urls of the file, excluding CurseForge. CF links are unable to be stored due to their TOS"
+            pattern: "^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$"
+            items:
+              type: "string"
+              description: "The url of the file"
+              pattern: "^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$"
+              example: "https://github.com/ReviversMC/modget-minecraft/releases/download/0.4.3/modget-minecraft-0.4.3+1.17.jar"
+            minItems: 0
+          curseDownloadAvailable:
+            type: "boolean"
+            description: "If the file is available on CurseForge, and can be retrieved with an api call to CF"
+            example: "true"
+          relationsToOtherMods:
+            type: "object"
+            description: "The relations to other mods"
+            properties:
+              required:
+                type: "array"
+                description: |
+                  The mods required for the mod to work (i.e. dependencies).
+                  It is possible that there are further dependencies that are not declared here
+                pattern: "^(?!\bindex\b|\bindices\b)[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                items: *genericIdentifier
+                minItems: 0
+              incompatible:
+                type: "array"
+                description: |
+                  The mods that are incompatible with the mod.
+                  It is possible that there are further incompatibilities that are not declared here
+                pattern: "^(?!\bindex\b|\bindices\b)[a-z0-9\\-_]+:[a-z0-9\\-_]+$"
+                items: *genericIdentifier
+                minItems: 0
+            required:
+              - "required"
+              - "incompatible"
+        required:
+          - "fileName"
+          - "mcVersions"
+          - "shortSha512Hash"
+          - "downloadUrls"
+          - "curseDownloadAvailable"
+          - "relationsToOtherMods"
+      minItems: 0
+
+    manifest: &manifest
+      type: "object"
+      properties:
+        indexVersion: *indexVersion
+        genericIdentifier: *genericIdentifier
+        fancyName: *fancyName
+        authors: *authors
+        license: *license
+        curseForgeId: *curseForgeId
+        modrinthId: *modrinthId
+        links: *links
+        files: *files
+        overrides:
+          type: "object"
+          description: "The overrides for the mod. Information in this field should already be reflected in the rest of the fields"
+          # No property should be required in overrides, as it is possible that the mod has no overrides, and there is thus no reason to send it
+          properties:
+            # Leave out index version. We do not want index version to be overrideable
+
+            genericIdentifier:
+              oneOf:
+                - *genericIdentifier
+                - type: "null"
+                  description: "If the override is not available"
+                  example: "null"
+            fancyName:
+              oneOf:
+                - *fancyName
+                - type: "null"
+                  description: "If the override is not available"
+                  example: "null"
+            authors:
+              oneOf:
+                - *authors
+                - type: "null"
+                  description: "If the override is not available"
+                  example: "null"
+            license: *license # License is already nullable
+            curseForgeId: *curseForgeId # CurseForgeId is already nullable
+            modrinthId: *modrinthId # ModrinthId is already nullable
+            links:
+              oneOf:
+                - type: "object"
+                  description: "If there are overrides available for links"
+                  properties:
+                    issues: *issueLink
+                    sourceControl: *sourceControlLink
+                    others:
+                      type: "object"
+                      description: "Other miscellaneous links to add, remove, or replace"
+                      properties:
+                        add:
+                          oneOf:
+                            - *otherLinks
+                            - type: "null"
+                              description: "If the override is not available"
+                              example: "null"
+                        remove:
+                          oneOf:
+                            - *otherLinks
+                            - type: "null"
+                              description: "If the override is not available"
+                              example: "null"
+                        replace:
+                          oneOf:
+                            - *otherLinks
+                            - type: "null"
+                              description: "If the override is not available"
+                              example: "null"
+                - type: "null"
+                  description: "If there are no overrides available for links"
+                  example: "null"
+
+            files:
+              oneOf:
+                - type: "object"
+                  description: "Files to add, remove, or replace. Edit a file by removing it and adding it again"
+                  properties:
+                    add:
+                      oneOf:
+                        - *files
+                        - type: "null"
+                          description: "If the override is not available"
+                          example: "null"
+                    remove:
+                      oneOf:
+                        - *files
+                        - type: "null"
+                          description: "If the override is not available"
+                          example: "null"
+                    replace:
+                      oneOf:
+                        - *files
+                        - type: "null"
+                          description: "If the override is not available"
+                          example: "null"
+                - type: "null"
+                  description: "If there are no overrides available for files"
+                  example: "null"
+
+      required:
+        - "indexVersion"
+        - "genericIdentifier"
+        - "fancyName"
+        - "authors"
+        - "license"
+        - "curseForgeId"
+        - "modrinthId"
+        - "links"
+        - "files"
+        # Do not make overrides required. If not present, the entire field should be omitted
+
+  parameters:
+    modLoaderParam: &modLoaderParam
+      name: "modLoader"
+      in: "path"
+      description: "The mod loader for which to get the index"
+      required: "true"
+      schema: *modLoaderSchema
+
+    loaderModNameParam: &loaderModNameParam
+      name: "loaderModName"
+      in: "path"
+      description: "The given mod name for a mod in the index. Usually used in combination with the a `modLoader` to form a `genericIdentifier`"
+      required: "true"
+      schema: *loaderModNameSchema
+
+tags:
+  - name: "indexFiles"
+    x-displayName: "Index Files"
+    description: "The index files to navigate \"the-mod-index\""
+  - name: "manifestFiles"
+    x-displayName: "Manifest Files"
+    description: "The manifest files found in \"the-mod-index\""
+
+paths:
+  /indices/index.json:
+    get:
+      operationId: "getIndex"
+      summary: "Get the index for all mod loaders."
+      description: "Get the index for all mod loaders. Does not include similar mods from other mod loaders."
+      tags:
+        - "indexFiles"
+      responses:
+        200:
+          description: "Expected response to a valid request"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - *indexForModLoader
+                  - type: "object"
+                    properties:
+                      modLoaders:
+                        type: "array"
+                        description: "The mod loaders that are available"
+                        items: *modLoaderSchema
+                    required:
+                      - "modLoaders"
+
+        404:
+          description: "The page was not found"
+
+  # {modLoader} in the path to explicitly exclude `index` as a result, as `index.json` redirects to `/indices/index.json`.
+  /indices/{modLoader}.json:
+    get:
+      operationId: "getLoaderIndex"
+      summary: "Get the index for a specific mod loader."
+      description: "Get the index for a specific mod loader. Does not include similar mods from other mod loaders."
+      tags:
+        - "indexFiles"
+      parameters:
+        - *modLoaderParam
+      responses:
+        200:
+          description: "Expected response to a valid request"
+          content:
+            application/json:
+              schema: *indexForModLoader
+        404:
+          description: "The page was not found"
+
+  /{modLoader}/{loaderModName}.json:
+    get:
+      operationId: "getModManifest"
+      summary: "Get the manifest for a specific mod."
+      description: |
+        Get the manifest for a specific mod.
+        Only returns valid information for the mod loader specified in the path, not all information for the mod
+        
+        For example, in a mod which has separate Fabric and Forge files, should {modLoader} be `forge`, 
+        only the Forge files will be reflected in the Forge manifest
+      tags:
+        - "manifestFiles"
+      parameters:
+        - *modLoaderParam
+        - *loaderModNameParam
+      responses:
+        200:
+          description: "Expected response to a valid request"
+          content:
+            application/json:
+              schema: *manifest
+        404:
+          description: "The page was not found"
+
