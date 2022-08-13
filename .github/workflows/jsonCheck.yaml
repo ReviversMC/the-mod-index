@@ -8,7 +8,7 @@ on:
 
 jobs:
   validate:
-    if: startsWith(${{ github.ref }}, "refs/heads/spec-update/") == false
+    if: ${{ startsWith(github.ref, "refs/heads/spec-update/") == false }}
     runs-on: ubuntu-latest
     steps:
       - name: Do the checking of index and manifest files
