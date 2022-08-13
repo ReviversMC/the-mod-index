@@ -2,13 +2,17 @@ name: Check json in index
 
 on:
   push:
-    branches: [ v5, maintainer-test ]
+    branches:
+      - v5
+      - maintainer-test
   pull_request:
-    branches: [ v5 ]
+    branches:
+      - v5
+    branches-ignore:
+      - refs/heads/spec-update/*
 
 jobs:
   validate:
-    if: ${{ github.ref != 'refs/heads/spec-update/*' }}
     runs-on: ubuntu-latest
     steps:
       - name: Do the checking of index and manifest files
