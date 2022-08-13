@@ -11,7 +11,7 @@ on:
 
 jobs:
   validate:
-    if: github.ref != "refs/heads/spec-update/*"
+    if: github.ref != 'refs/heads/spec-update/*'
     runs-on: ubuntu-latest
     steps:
       - name: Do the checking of index and manifest files
