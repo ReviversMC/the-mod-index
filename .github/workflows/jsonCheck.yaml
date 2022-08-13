@@ -1,13 +1,16 @@
-name: Json Check
+name: Check json in index
 
 on:
   push:
-    branches: [ v5, maintainer-test ]
+    branches:
+      - v5
+      - maintainer-test
+      - !spec-update/*
   pull_request:
-    branches: [ v5 ]
+    branches:
+      - v5
 
 jobs:
-  if: startsWith(${{ github.ref }}, "refs/heads/spec-update/") == false
   build:
     runs-on: ubuntu-latest
     steps:
