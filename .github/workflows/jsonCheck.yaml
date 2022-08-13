@@ -7,6 +7,7 @@ on:
     branches: [ v5 ]
 
 jobs:
+  if: startsWith(${{ github.ref }}, "refs/heads/spec-update/") == false
   build:
     runs-on: ubuntu-latest
     steps:
