@@ -11,8 +11,7 @@ on:
 
 jobs:
   validate:
-    if: github.ref != 'refs/heads/spec-update/[0-9]+.[0-9]+.[0-9]+'
     runs-on: ubuntu-latest
     steps:
       - name: Check index and manifest files
-        uses: reviversmc/the-mod-index-validation@latest
+        uses: ReviversMC/the-mod-index-validation@latest
