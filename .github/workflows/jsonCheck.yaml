@@ -2,17 +2,14 @@ name: Check json in index
 
 on:
   push:
-    branches:
-      - v5
-      - maintainer-test
-      - !spec-update/*
+    branches: [ v5, maintainer-test ]
   pull_request:
-    branches:
-      - v5
+    branches: [ v5 ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: startsWith(${{ github.ref }}, "refs/heads/spec-update/") == false
     steps:
       - name: Do the checking of index and manifest files
         uses: reviversmc/the-mod-index-validation@latest
