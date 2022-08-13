@@ -1,0 +1,32 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy TMI spec
+
+on:
+  # Runs on pushes targeting the default branch and spec update branches
+  push:
+    branches: ["v5", "spec-update/*"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }} 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build pages
+        run: |
+          npm i -g redoc-cli
+          redoc-cli build schema/openapi.yaml
+          mkdir build/
+          mv redoc-static.html build/index.html
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
+          target-folder: ${{ github.ref }} # Publish docs to a specific path. This allows spec updates to not override existing prod sites 
