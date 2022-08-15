@@ -14,7 +14,7 @@ permissions:
   contents: write
 jobs:
   build-and-deploy:
-    concurrency: ci-${{ github.ref }} 
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,4 +29,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build
-          target-folder: ${{ github.ref }} # Publish docs to a specific path. This allows spec updates to not override existing prod sites 
+          target-folder: ${{ github.ref_name }} # Publish docs to a specific path. This allows spec updates to not override existing prod site

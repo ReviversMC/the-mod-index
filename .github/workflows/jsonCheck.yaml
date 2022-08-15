@@ -1,14 +1,17 @@
-name: Json Check
+name: Check json in index
 
 on:
   push:
-    branches: [ v5, maintainer-test ]
+    branches:
+      - v5
+      - maintainer-test
   pull_request:
-    branches: [ v5 ]
+    branches:
+      - v5
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Do the checking of index and manifest files
-        uses: reviversmc/the-mod-index-validation@latest
+      - name: Check index and manifest files
+        uses: ReviversMC/the-mod-index-validation@latest
